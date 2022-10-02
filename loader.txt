@@ -1,0 +1,18 @@
+import os
+import catboost
+from catboost import CatBoostClassifier
+def get_model_path(path: str) -> str:
+    if os.environ.get("IS_LMS") == "1":  # проверяем где выполняется код в лмс, или локально. Немного магии
+        MODEL_PATH = '/workdir/user_input/model'
+    else:
+        MODEL_PATH = path
+    return MODEL_PATH
+
+
+
+def load_models() -> catboost.core.CatBoostClassifier:
+    model_path = get_model_path("/Users/leoazmanov/Desktop/leos_model-2")
+    empty_model = CatBoostClassifier()
+    return_model = empty_model.load_model(model_path)
+    return return_model 
+    # LOAD MODEL HERE PLS :)
